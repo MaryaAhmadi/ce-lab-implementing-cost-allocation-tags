@@ -1,41 +1,123 @@
 # Lab M7.02 - Implementing Cost Allocation Tags
 
-**Repository:** [https://github.com/cloud-engineering-bootcamp/ce-lab-implementing-cost-allocation-tags](https://github.com/cloud-engineering-bootcamp/ce-lab-implementing-cost-allocation-tags)
+**Repository:** https://github.com/MaryaAhmadi/ce-lab-implementing-cost-allocation-tags.git
+
 
 **Activity Type:** Individual  
 **Estimated Time:** 45-60 minutes
 
+
+##Overview
+
+This lab demonstrates how to implement a cost allocation tagging strategy in AWS to improve cost visibility, accountability, and governance.
+By applying consistent tags across resources and enabling cost allocation tracking, organizations can accurately attribute cloud spending to teams, projects, and environments.
+
+
 ## Learning Objectives
 
-- [ ] Design a tag taxonomy for cost tracking
-- [ ] Apply tags to AWS resources
-- [ ] Activate cost allocation tags
-- [ ] View costs by tags in Cost Explorer
-- [ ] Enforce tagging with AWS Config
+- [ ✅ ] Design a tag taxonomy for cost tracking
+- [ ✅ ] Apply tags to AWS resources
+- [ ✅ ] Activate cost allocation tags
+- [ ✅ ] View costs by tags in Cost Explorer
+- [ ✅ ] Enforce tagging with AWS Config
 
 ## Prerequisites
 
-- [ ] AWS account with resources running
-- [ ] IAM permissions to tag resources and manage Cost Allocation Tags
-- [ ] Completed Module 7 Lessons 1-3
+- AWS account with active resources (EC2, S3, RDS)
+- IAM permissions:
+  - tag:TagResources
+  - ec2:CreateTags
+  - Billing and Cost Management access
+- Completion of Module 7 Lessons 1–3
 
-## Introduction
 
-Tags are the foundation of cost visibility. Without them, you can't track costs by team, project, or environment.
+
 
 ## Scenario
+The organization currently operates 50+ AWS resources without a tagging strategy. As a result, the finance team cannot track or allocate cloud costs effectively.
 
-Your organization has 50+ AWS resources but no tagging strategy. The finance team can't attribute costs to teams. Your task: implement cost allocation tags.
+Your task is to implement a tagging strategy that ensures every resource is 
+traceable by:
+- Environment
+- Owner
+- Project
+- Cost Center
 
-## Your Task
+## Implementation Summary
+In this lab, the following were completed:
 
-1. Design tag taxonomy (4-6 required tags)
-2. Tag at least 10 existing resources
-3. Activate cost allocation tags
-4. Create Cost Explorer view by tags
-5. Document tagging strategy
+- Designed a tagging strategy (tagging-strategy.md)
+- Tagged 10+ AWS resources
+- Activated cost allocation tags in Billing Console
+- Configured AWS Config rule (required-tags)
+- Verified compliance status
+- Documented results (tag-compliance-report.md)
 
-**Time limit:** 45-60 minutes
+## Tagging Strategy
+
+The following tags were defined as mandatory:
+
+TagKey	  | Description
+
+Environment	| Defines deployment environment (development, staging, production)
+Owner	   | Responsible team or individual
+Project.    | 	Associated project name
+CostCenter	|  Department or billing unit
+
+##  Naming Conventions
+- Keys: PascalCase (e.g., Environment)
+- Values: lowercase-with-dashes (e.g., web-app)
+
+##  Steps Performed
+
+1. Tagging Resources
+- Used AWS Tag Editor to apply tags across multiple services
+- Tagged at least 10 resources (EC2, S3, RDS)
+- Verified tags via resource details and filtering
+
+2. Activating Cost Allocation Tags
+- Enabled tags in Billing Console
+- Activated:
+   - Environment
+   - Owner
+   - Project
+   - CostCenter
+
+⏳ Note: Tags appear in Cost Explorer after ~24 hours
+
+3. Cost Analysis (Pending 24h)
+- Cost Explorer configured to group by:
+- Environment
+- Owner
+
+## 📸 Screenshots:
+costs-by-environment.png
+costs-by-owner.png
+
+4. AWS Config Rule
+- Created rule: required-tags
+- Configured required keys:
+  - Environment
+  - Owner
+  - Project
+  - CostCenter
+- Evaluated compliance across resources
+
+## 📸 Screenshot:
+config-compliance.png
+
+## Results
+- Successfully tagged all target resources
+- Activated cost allocation tags
+- AWS Config identified compliant and non-compliant resources
+- Governance mechanism implemented for ongoing compliance
+
+## Challenges & Observations
+- AWS Config is case-sensitive for tag keys
+- Incorrect rule parameters can result in false non-compliance
+- Cost Explorer requires time delay after activation
+- Some existing resources may initially appear non-compliant
+
 
 ## Step-by-Step Instructions
 
@@ -155,23 +237,16 @@ Create `tag-compliance-report.md`:
 - config-compliance.png
 ```
 
-## Submission
-
-GitHub repository with:
-1. `tagging-strategy.md`
-2. `tag-compliance-report.md`
-3. Screenshots (costs by tags, Config compliance)
-4. `README.md`
 
 ## Verification Checklist
 
-- [ ] Designed tag taxonomy (4-6 tags)
-- [ ] Tagged at least 10 resources
-- [ ] Activated cost allocation tags
-- [ ] Created Cost Explorer view by tags (after 24hrs)
-- [ ] Set up AWS Config rule for required tags
-- [ ] Documented strategy and compliance
-- [ ] All files in GitHub
+- [ ✅] Designed tag taxonomy (4-6 tags)
+- [ ✅] Tagged at least 10 resources
+- [ ✅] Activated cost allocation tags
+- [ ✅] Created Cost Explorer view by tags (after 24hrs)
+- [ ✅] Set up AWS Config rule for required tags
+- [ ✅] Documented strategy and compliance
+- [ ✅] All files in GitHub
 
 ## Troubleshooting
 
@@ -188,6 +263,14 @@ GitHub repository with:
 - Expected for existing resources
 - Remediate by adding missing tags
 - Prevent with tag policies
+
+
+## Conclusion
+This lab demonstrates how proper tagging improves:
+- Cost visibility
+- Accountability
+- Governance
+By combining tagging strategies with AWS Config enforcement, organizations can maintain consistent and reliable cloud cost tracking.
 
 ## Additional Resources
 
